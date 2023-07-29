@@ -4,6 +4,8 @@
 
 package com.jessenerio;
 
+import com.jessenerio.handler.*;
+import com.jessenerio.ui.TabsPanel;
 import org.cef.CefApp;
 import org.cef.CefApp.CefVersion;
 import org.cef.CefClient;
@@ -21,17 +23,9 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.jessenerio.dialog.DownloadDialog;
-import com.jessenerio.handler.AppHandler;
-import com.jessenerio.handler.ContextMenuHandler;
-import com.jessenerio.handler.DragHandler;
-import com.jessenerio.handler.JSDialogHandler;
-import com.jessenerio.handler.KeyboardHandler;
-import com.jessenerio.handler.MessageRouterHandler;
-import com.jessenerio.handler.MessageRouterHandlerEx;
-import com.jessenerio.handler.RequestHandler;
 import com.jessenerio.ui.ControlPanel;
 import com.jessenerio.ui.MenuBar;
 import com.jessenerio.ui.StatusPanel;
@@ -75,6 +69,7 @@ public class MainFrame extends BrowserFrame {
     private final CefClient client_;
     private String errorMsg_ = "";
     private ControlPanel control_pane_;
+	private TabsPanel tabs_pane_;
     private StatusPanel status_panel_;
     private boolean browserFocus_ = true;
     private boolean osr_enabled_;
@@ -151,6 +146,7 @@ public class MainFrame extends BrowserFrame {
             @Override
             public void onTitleChange(CefBrowser browser, String title) {
                 setTitle(title);
+				tabs_pane_.updateTitle(title);
             }
             @Override
             public void onStatusMessage(CefBrowser browser, String value) {
@@ -261,9 +257,14 @@ public class MainFrame extends BrowserFrame {
 
     private JPanel createContentPanel() {
         JPanel contentPanel = new JPanel(new BorderLayout());
+		JPanel navigation = new JPanel();
+		navigation.setLayout(new BoxLayout(navigation, BoxLayout.Y_AXIS));
         control_pane_ = new ControlPanel(getBrowser());
+		tabs_pane_ = new TabsPanel(getBrowser());
         status_panel_ = new StatusPanel();
-        contentPanel.add(control_pane_, BorderLayout.NORTH);
+		navigation.add(tabs_pane_);
+		navigation.add(control_pane_);
+        contentPanel.add(navigation, BorderLayout.NORTH);
         contentPanel.add(status_panel_, BorderLayout.SOUTH);
         return contentPanel;
     }
