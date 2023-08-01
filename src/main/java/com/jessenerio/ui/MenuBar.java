@@ -25,10 +25,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -61,10 +59,10 @@ import com.jessenerio.util.DataUri;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
     class SaveAs implements CefStringVisitor {
-        private PrintWriter fileWriter_;
+        private final PrintWriter fileWriter_;
 
-        public SaveAs(String fName) throws FileNotFoundException, UnsupportedEncodingException {
-            fileWriter_ = new PrintWriter(fName, "UTF-8");
+        public SaveAs(String fName) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+            fileWriter_ = new PrintWriter(fName, StandardCharsets.UTF_8);
         }
 
         @Override
@@ -123,7 +121,7 @@ public class MenuBar extends JMenuBar {
                             try {
                                 SaveAs saveContent = new SaveAs(filePaths.get(0));
                                 browser_.getSource(saveContent);
-                            } catch (FileNotFoundException | UnsupportedEncodingException e) {
+                            } catch (IOException e) {
                                 browser_.executeJavaScript("alert(\"Can't save file\");",
                                         control_pane_.getAddress(), 0);
                             }
@@ -346,7 +344,7 @@ public class MenuBar extends JMenuBar {
                     myRequest.setMethod("GET");
                     myRequest.setURL("http://www.google.com/#q=" + searchFor);
                     myRequest.setFirstPartyForCookies("http://www.google.com/#q=" + searchFor);
-                    browser_.loadRequest(myRequest);
+                    browser_.loadHTTPRequest(myRequest);
                 }
             }
         });
@@ -525,10 +523,9 @@ public class MenuBar extends JMenuBar {
         // Test if the bookmark already exists. If yes, update URL
         Component[] entries = bookmarkMenu_.getMenuComponents();
         for (Component itemEntry : entries) {
-            if (!(itemEntry instanceof JMenuItem)) continue;
+            if (!(itemEntry instanceof JMenuItem item)) continue;
 
-            JMenuItem item = (JMenuItem) itemEntry;
-            if (item.getText().equals(name)) {
+			if (item.getText().equals(name)) {
                 item.setActionCommand(URL);
                 return;
             }

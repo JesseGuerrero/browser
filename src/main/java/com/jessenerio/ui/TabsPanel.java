@@ -19,9 +19,9 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class TabsPanel extends JPanel {
-	private int currentTab;
+	private final int currentTab;
 	private final int maxTabs = 10;
-	private List<Tab> tabs = new ArrayList<Tab>();
+	private final List<Tab> tabs = new ArrayList<Tab>();
 
     public TabsPanel(CefBrowser browser) {
         assert browser != null;

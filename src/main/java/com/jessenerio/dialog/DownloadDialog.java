@@ -47,12 +47,12 @@ public class DownloadDialog extends JDialog implements CefDownloadHandler {
     private class DownloadObject extends JPanel {
         private boolean isHidden_ = true;
         private final int identifier_;
-        private JLabel fileName_ = new JLabel();
-        private JLabel status_ = new JLabel();
-        private JButton dlAbort_ = new JButton();
-        private JButton dlRemoveEntry_ = new JButton("x");
+        private final JLabel fileName_ = new JLabel();
+        private final JLabel status_ = new JLabel();
+        private final JButton dlAbort_ = new JButton();
+        private final JButton dlRemoveEntry_ = new JButton("x");
         private CefDownloadItemCallback callback_;
-        private Color bgColor_;
+        private final Color bgColor_;
 
         DownloadObject(CefDownloadItem downloadItem, String suggestedName) {
             super();
@@ -110,7 +110,7 @@ public class DownloadDialog extends JDialog implements CefDownloadHandler {
             if (bytes < unit) return bytes + " B";
 
             int exp = (int) (Math.log(bytes) / Math.log(unit));
-            String pre = "" + ("kMGTPE").charAt(exp - 1);
+            String pre = String.valueOf(("kMGTPE").charAt(exp - 1));
             return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
         }
 

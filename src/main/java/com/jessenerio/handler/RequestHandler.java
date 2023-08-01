@@ -86,6 +86,10 @@ public class RequestHandler extends CefResourceRequestHandlerAdapter implements 
         // This test extracts the value of the test form.
         // (see "Show Form" entry within BrowserMenuBar)
         // and sends its value as HTTP-GET request to Google.
+		if(request.getMethod().equalsIgnoreCase("GET")) {
+			System.out.println("GET request: " + request.getURL());
+		}
+
         if (request.getMethod().equalsIgnoreCase("POST")
                 && request.getURL().equals("http://www.google.com/")) {
             String forwardTo = "http://www.google.com/#q=";

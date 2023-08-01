@@ -308,7 +308,7 @@ public class UrlRequestDialog extends JDialog {
 
     private class TableModel extends AbstractTableModel {
         private final String[] columnNames;
-        private Vector<Object[]> rowData = new Vector<>();
+        private final Vector<Object[]> rowData = new Vector<>();
         private final boolean hasKeyColumn_;
 
         public TableModel(boolean hasKeyColumn) {
@@ -323,10 +323,10 @@ public class UrlRequestDialog extends JDialog {
         public void newDefaultEntry() {
             int row = rowData.size();
             if (hasKeyColumn_) {
-                Object[] rowEntry = {"key", "value", new Boolean(false)};
+                Object[] rowEntry = {"key", "value", Boolean.FALSE};
                 rowData.addElement(rowEntry);
             } else {
-                Object[] rowEntry = {"value", new Boolean(false)};
+                Object[] rowEntry = {"value", Boolean.FALSE};
                 rowData.addElement(rowEntry);
             }
             fireTableRowsInserted(row, row);
@@ -346,10 +346,10 @@ public class UrlRequestDialog extends JDialog {
         public void addEntry(String key, String value) {
             int row = rowData.size();
             if (hasKeyColumn_) {
-                Object[] rowEntry = {key, value, new Boolean(false)};
+                Object[] rowEntry = {key, value, Boolean.FALSE};
                 rowData.addElement(rowEntry);
             } else {
-                Object[] rowEntry = {value, new Boolean(false)};
+                Object[] rowEntry = {value, Boolean.FALSE};
                 rowData.addElement(rowEntry);
             }
             fireTableRowsInserted(row, row);

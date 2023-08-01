@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -38,7 +39,7 @@ public class UrlRequestDialogReply extends JDialog implements CefURLRequestClien
     private final JButton cancelButton_ = new JButton("Cancel");
     private CefURLRequest urlRequest_ = null;
     private final Frame owner_;
-    private ByteArrayOutputStream byteStream_ = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream byteStream_ = new ByteArrayOutputStream();
 
     public UrlRequestDialogReply(Frame owner, String title) {
         super(owner, title, false);
@@ -126,12 +127,8 @@ public class UrlRequestDialogReply extends JDialog implements CefURLRequestClien
                 }
                 repliedResult_.append(updateMsg);
                 if (printByteStream) {
-                    try {
-                        repliedResult_.append("\n\n" + byteStream_.toString("UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        repliedResult_.append("\n\n" + byteStream_.toString());
-                    }
-                }
+					repliedResult_.append("\n\n" + byteStream_.toString(StandardCharsets.UTF_8));
+				}
             }
         };
 

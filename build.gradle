@@ -2,6 +2,11 @@ plugins {
     id 'java'
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 group = 'nerio.jesse'
 version = '1.0-SNAPSHOT'
 
@@ -17,7 +22,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation name: "jogl-all"
     implementation name: "gluegen-rt"
-    implementation name: "jcef"
     implementation name: "gluegen-rt-natives-windows-amd64"
     implementation name: "jogl-all-natives-windows-amd64"
 }

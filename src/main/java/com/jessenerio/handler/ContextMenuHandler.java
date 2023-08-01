@@ -21,7 +21,7 @@ import com.jessenerio.dialog.ShowTextDialog;
 
 public class ContextMenuHandler implements CefContextMenuHandler {
     private final Frame owner_;
-    private Map<Integer, String> suggestions_ = new HashMap<Integer, String>();
+    private final Map<Integer, String> suggestions_ = new HashMap<Integer, String>();
 
     public ContextMenuHandler(Frame owner) {
         owner_ = owner;

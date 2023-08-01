@@ -1,0 +1,288 @@
+/*     */ package org.cef.handler;
+/*     */ 
+/*     */ import java.util.HashMap;
+/*     */ import java.util.Map;
+/*     */ import org.cef.browser.CefBrowser;
+/*     */ import org.cef.browser.CefFrame;
+/*     */ import org.cef.network.CefRequest;
+/*     */ 
+/*     */ public interface CefLoadHandler {
+/*     */   void onLoadingStateChange(CefBrowser paramCefBrowser, boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3);
+/*     */   
+/*     */   void onLoadStart(CefBrowser paramCefBrowser, CefFrame paramCefFrame, CefRequest.TransitionType paramTransitionType);
+/*     */   
+/*     */   void onLoadEnd(CefBrowser paramCefBrowser, CefFrame paramCefFrame, int paramInt);
+/*     */   
+/*     */   void onLoadError(CefBrowser paramCefBrowser, CefFrame paramCefFrame, ErrorCode paramErrorCode, String paramString1, String paramString2);
+/*     */   
+/*     */    enum ErrorCode {
+/*  19 */     ERR_NONE(0),
+/*  20 */     ERR_IO_PENDING(-1),
+/*  21 */     ERR_FAILED(-2),
+/*  22 */     ERR_ABORTED(-3),
+/*  23 */     ERR_INVALID_ARGUMENT(-4),
+/*  24 */     ERR_INVALID_HANDLE(-5),
+/*  25 */     ERR_FILE_NOT_FOUND(-6),
+/*  26 */     ERR_TIMED_OUT(-7),
+/*  27 */     ERR_FILE_TOO_BIG(-8),
+/*  28 */     ERR_UNEXPECTED(-9),
+/*  29 */     ERR_ACCESS_DENIED(-10),
+/*  30 */     ERR_NOT_IMPLEMENTED(-11),
+/*  31 */     ERR_INSUFFICIENT_RESOURCES(-12),
+/*  32 */     ERR_OUT_OF_MEMORY(-13),
+/*  33 */     ERR_UPLOAD_FILE_CHANGED(-14),
+/*  34 */     ERR_SOCKET_NOT_CONNECTED(-15),
+/*  35 */     ERR_FILE_EXISTS(-16),
+/*  36 */     ERR_FILE_PATH_TOO_LONG(-17),
+/*  37 */     ERR_FILE_NO_SPACE(-18),
+/*  38 */     ERR_FILE_VIRUS_INFECTED(-19),
+/*  39 */     ERR_BLOCKED_BY_CLIENT(-20),
+/*  40 */     ERR_NETWORK_CHANGED(-21),
+/*  41 */     ERR_BLOCKED_BY_ADMINISTRATOR(-22),
+/*  42 */     ERR_SOCKET_IS_CONNECTED(-23),
+/*  43 */     ERR_BLOCKED_ENROLLMENT_CHECK_PENDING(-24),
+/*  44 */     ERR_UPLOAD_STREAM_REWIND_NOT_SUPPORTED(-25),
+/*  45 */     ERR_CONTEXT_SHUT_DOWN(-26),
+/*  46 */     ERR_BLOCKED_BY_RESPONSE(-27),
+/*  47 */     ERR_CLEARTEXT_NOT_PERMITTED(-29),
+/*  48 */     ERR_CONNECTION_CLOSED(-100),
+/*  49 */     ERR_CONNECTION_RESET(-101),
+/*  50 */     ERR_CONNECTION_REFUSED(-102),
+/*  51 */     ERR_CONNECTION_ABORTED(-103),
+/*  52 */     ERR_CONNECTION_FAILED(-104),
+/*  53 */     ERR_NAME_NOT_RESOLVED(-105),
+/*  54 */     ERR_INTERNET_DISCONNECTED(-106),
+/*  55 */     ERR_SSL_PROTOCOL_ERROR(-107),
+/*  56 */     ERR_ADDRESS_INVALID(-108),
+/*  57 */     ERR_ADDRESS_UNREACHABLE(-109),
+/*  58 */     ERR_SSL_CLIENT_AUTH_CERT_NEEDED(-110),
+/*  59 */     ERR_TUNNEL_CONNECTION_FAILED(-111),
+/*  60 */     ERR_NO_SSL_VERSIONS_ENABLED(-112),
+/*  61 */     ERR_SSL_VERSION_OR_CIPHER_MISMATCH(-113),
+/*  62 */     ERR_SSL_RENEGOTIATION_REQUESTED(-114),
+/*  63 */     ERR_PROXY_AUTH_UNSUPPORTED(-115),
+/*  64 */     ERR_CERT_ERROR_IN_SSL_RENEGOTIATION(-116),
+/*  65 */     ERR_BAD_SSL_CLIENT_AUTH_CERT(-117),
+/*  66 */     ERR_CONNECTION_TIMED_OUT(-118),
+/*  67 */     ERR_HOST_RESOLVER_QUEUE_TOO_LARGE(-119),
+/*  68 */     ERR_SOCKS_CONNECTION_FAILED(-120),
+/*  69 */     ERR_SOCKS_CONNECTION_HOST_UNREACHABLE(-121),
+/*  70 */     ERR_ALPN_NEGOTIATION_FAILED(-122),
+/*  71 */     ERR_SSL_NO_RENEGOTIATION(-123),
+/*  72 */     ERR_WINSOCK_UNEXPECTED_WRITTEN_BYTES(-124),
+/*  73 */     ERR_SSL_DECOMPRESSION_FAILURE_ALERT(-125),
+/*  74 */     ERR_SSL_BAD_RECORD_MAC_ALERT(-126),
+/*  75 */     ERR_PROXY_AUTH_REQUESTED(-127),
+/*  76 */     ERR_PROXY_CONNECTION_FAILED(-130),
+/*  77 */     ERR_MANDATORY_PROXY_CONFIGURATION_FAILED(-131),
+/*  78 */     ERR_PRECONNECT_MAX_SOCKET_LIMIT(-133),
+/*  79 */     ERR_SSL_CLIENT_AUTH_PRIVATE_KEY_ACCESS_DENIED(-134),
+/*  80 */     ERR_SSL_CLIENT_AUTH_CERT_NO_PRIVATE_KEY(-135),
+/*  81 */     ERR_PROXY_CERTIFICATE_INVALID(-136),
+/*  82 */     ERR_NAME_RESOLUTION_FAILED(-137),
+/*  83 */     ERR_NETWORK_ACCESS_DENIED(-138),
+/*  84 */     ERR_TEMPORARILY_THROTTLED(-139),
+/*  85 */     ERR_HTTPS_PROXY_TUNNEL_RESPONSE_REDIRECT(-140),
+/*  86 */     ERR_SSL_CLIENT_AUTH_SIGNATURE_FAILED(-141),
+/*  87 */     ERR_MSG_TOO_BIG(-142),
+/*  88 */     ERR_WS_PROTOCOL_ERROR(-145),
+/*  89 */     ERR_ADDRESS_IN_USE(-147),
+/*  90 */     ERR_SSL_HANDSHAKE_NOT_COMPLETED(-148),
+/*  91 */     ERR_SSL_BAD_PEER_PUBLIC_KEY(-149),
+/*  92 */     ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN(-150),
+/*  93 */     ERR_CLIENT_AUTH_CERT_TYPE_UNSUPPORTED(-151),
+/*  94 */     ERR_SSL_DECRYPT_ERROR_ALERT(-153),
+/*  95 */     ERR_WS_THROTTLE_QUEUE_TOO_LARGE(-154),
+/*  96 */     ERR_SSL_SERVER_CERT_CHANGED(-156),
+/*  97 */     ERR_SSL_UNRECOGNIZED_NAME_ALERT(-159),
+/*  98 */     ERR_SOCKET_SET_RECEIVE_BUFFER_SIZE_ERROR(-160),
+/*  99 */     ERR_SOCKET_SET_SEND_BUFFER_SIZE_ERROR(-161),
+/* 100 */     ERR_SOCKET_RECEIVE_BUFFER_SIZE_UNCHANGEABLE(-162),
+/* 101 */     ERR_SOCKET_SEND_BUFFER_SIZE_UNCHANGEABLE(-163),
+/* 102 */     ERR_SSL_CLIENT_AUTH_CERT_BAD_FORMAT(-164),
+/* 103 */     ERR_ICANN_NAME_COLLISION(-166),
+/* 104 */     ERR_SSL_SERVER_CERT_BAD_FORMAT(-167),
+/* 105 */     ERR_CT_STH_PARSING_FAILED(-168),
+/* 106 */     ERR_CT_STH_INCOMPLETE(-169),
+/* 107 */     ERR_UNABLE_TO_REUSE_CONNECTION_FOR_PROXY_AUTH(-170),
+/* 108 */     ERR_CT_CONSISTENCY_PROOF_PARSING_FAILED(-171),
+/* 109 */     ERR_SSL_OBSOLETE_CIPHER(-172),
+/* 110 */     ERR_WS_UPGRADE(-173),
+/* 111 */     ERR_READ_IF_READY_NOT_IMPLEMENTED(-174),
+/* 112 */     ERR_NO_BUFFER_SPACE(-176),
+/* 113 */     ERR_SSL_CLIENT_AUTH_NO_COMMON_ALGORITHMS(-177),
+/* 114 */     ERR_EARLY_DATA_REJECTED(-178),
+/* 115 */     ERR_WRONG_VERSION_ON_EARLY_DATA(-179),
+/* 116 */     ERR_TLS13_DOWNGRADE_DETECTED(-180),
+/* 117 */     ERR_SSL_KEY_USAGE_INCOMPATIBLE(-181),
+/* 118 */     ERR_CERT_COMMON_NAME_INVALID(-200),
+/* 119 */     ERR_CERT_DATE_INVALID(-201),
+/* 120 */     ERR_CERT_AUTHORITY_INVALID(-202),
+/* 121 */     ERR_CERT_CONTAINS_ERRORS(-203),
+/* 122 */     ERR_CERT_NO_REVOCATION_MECHANISM(-204),
+/* 123 */     ERR_CERT_UNABLE_TO_CHECK_REVOCATION(-205),
+/* 124 */     ERR_CERT_REVOKED(-206),
+/* 125 */     ERR_CERT_INVALID(-207),
+/* 126 */     ERR_CERT_WEAK_SIGNATURE_ALGORITHM(-208),
+/* 127 */     ERR_CERT_NON_UNIQUE_NAME(-210),
+/* 128 */     ERR_CERT_WEAK_KEY(-211),
+/* 129 */     ERR_CERT_NAME_CONSTRAINT_VIOLATION(-212),
+/* 130 */     ERR_CERT_VALIDITY_TOO_LONG(-213),
+/* 131 */     ERR_CERTIFICATE_TRANSPARENCY_REQUIRED(-214),
+/* 132 */     ERR_CERT_SYMANTEC_LEGACY(-215),
+/* 133 */     ERR_CERT_KNOWN_INTERCEPTION_BLOCKED(-217),
+/* 134 */     ERR_SSL_OBSOLETE_VERSION(-218),
+/* 135 */     ERR_CERT_END(-219),
+/* 136 */     ERR_INVALID_URL(-300),
+/* 137 */     ERR_DISALLOWED_URL_SCHEME(-301),
+/* 138 */     ERR_UNKNOWN_URL_SCHEME(-302),
+/* 139 */     ERR_INVALID_REDIRECT(-303),
+/* 140 */     ERR_TOO_MANY_REDIRECTS(-310),
+/* 141 */     ERR_UNSAFE_REDIRECT(-311),
+/* 142 */     ERR_UNSAFE_PORT(-312),
+/* 143 */     ERR_INVALID_RESPONSE(-320),
+/* 144 */     ERR_INVALID_CHUNKED_ENCODING(-321),
+/* 145 */     ERR_METHOD_NOT_SUPPORTED(-322),
+/* 146 */     ERR_UNEXPECTED_PROXY_AUTH(-323),
+/* 147 */     ERR_EMPTY_RESPONSE(-324),
+/* 148 */     ERR_RESPONSE_HEADERS_TOO_BIG(-325),
+/* 149 */     ERR_PAC_SCRIPT_FAILED(-327),
+/* 150 */     ERR_REQUEST_RANGE_NOT_SATISFIABLE(-328),
+/* 151 */     ERR_MALFORMED_IDENTITY(-329),
+/* 152 */     ERR_CONTENT_DECODING_FAILED(-330),
+/* 153 */     ERR_NETWORK_IO_SUSPENDED(-331),
+/* 154 */     ERR_SYN_REPLY_NOT_RECEIVED(-332),
+/* 155 */     ERR_ENCODING_CONVERSION_FAILED(-333),
+/* 156 */     ERR_UNRECOGNIZED_FTP_DIRECTORY_LISTING_FORMAT(-334),
+/* 157 */     ERR_NO_SUPPORTED_PROXIES(-336),
+/* 158 */     ERR_HTTP2_PROTOCOL_ERROR(-337),
+/* 159 */     ERR_INVALID_AUTH_CREDENTIALS(-338),
+/* 160 */     ERR_UNSUPPORTED_AUTH_SCHEME(-339),
+/* 161 */     ERR_ENCODING_DETECTION_FAILED(-340),
+/* 162 */     ERR_MISSING_AUTH_CREDENTIALS(-341),
+/* 163 */     ERR_UNEXPECTED_SECURITY_LIBRARY_STATUS(-342),
+/* 164 */     ERR_MISCONFIGURED_AUTH_ENVIRONMENT(-343),
+/* 165 */     ERR_UNDOCUMENTED_SECURITY_LIBRARY_STATUS(-344),
+/* 166 */     ERR_RESPONSE_BODY_TOO_BIG_TO_DRAIN(-345),
+/* 167 */     ERR_RESPONSE_HEADERS_MULTIPLE_CONTENT_LENGTH(-346),
+/* 168 */     ERR_INCOMPLETE_HTTP2_HEADERS(-347),
+/* 169 */     ERR_PAC_NOT_IN_DHCP(-348),
+/* 170 */     ERR_RESPONSE_HEADERS_MULTIPLE_CONTENT_DISPOSITION(-349),
+/* 171 */     ERR_RESPONSE_HEADERS_MULTIPLE_LOCATION(-350),
+/* 172 */     ERR_HTTP2_SERVER_REFUSED_STREAM(-351),
+/* 173 */     ERR_HTTP2_PING_FAILED(-352),
+/* 174 */     ERR_CONTENT_LENGTH_MISMATCH(-354),
+/* 175 */     ERR_INCOMPLETE_CHUNKED_ENCODING(-355),
+/* 176 */     ERR_QUIC_PROTOCOL_ERROR(-356),
+/* 177 */     ERR_RESPONSE_HEADERS_TRUNCATED(-357),
+/* 178 */     ERR_QUIC_HANDSHAKE_FAILED(-358),
+/* 179 */     ERR_HTTP2_INADEQUATE_TRANSPORT_SECURITY(-360),
+/* 180 */     ERR_HTTP2_FLOW_CONTROL_ERROR(-361),
+/* 181 */     ERR_HTTP2_FRAME_SIZE_ERROR(-362),
+/* 182 */     ERR_HTTP2_COMPRESSION_ERROR(-363),
+/* 183 */     ERR_PROXY_AUTH_REQUESTED_WITH_NO_CONNECTION(-364),
+/* 184 */     ERR_HTTP_1_1_REQUIRED(-365),
+/* 185 */     ERR_PROXY_HTTP_1_1_REQUIRED(-366),
+/* 186 */     ERR_PAC_SCRIPT_TERMINATED(-367),
+/* 187 */     ERR_INVALID_HTTP_RESPONSE(-370),
+/* 188 */     ERR_CONTENT_DECODING_INIT_FAILED(-371),
+/* 189 */     ERR_HTTP2_RST_STREAM_NO_ERROR_RECEIVED(-372),
+/* 190 */     ERR_HTTP2_PUSHED_STREAM_NOT_AVAILABLE(-373),
+/* 191 */     ERR_HTTP2_CLAIMED_PUSHED_STREAM_RESET_BY_SERVER(-374),
+/* 192 */     ERR_TOO_MANY_RETRIES(-375),
+/* 193 */     ERR_HTTP2_STREAM_CLOSED(-376),
+/* 194 */     ERR_HTTP2_CLIENT_REFUSED_STREAM(-377),
+/* 195 */     ERR_HTTP2_PUSHED_RESPONSE_DOES_NOT_MATCH(-378),
+/* 196 */     ERR_HTTP_RESPONSE_CODE_FAILURE(-379),
+/* 197 */     ERR_QUIC_CERT_ROOT_NOT_KNOWN(-380),
+/* 198 */     ERR_CACHE_MISS(-400),
+/* 199 */     ERR_CACHE_READ_FAILURE(-401),
+/* 200 */     ERR_CACHE_WRITE_FAILURE(-402),
+/* 201 */     ERR_CACHE_OPERATION_NOT_SUPPORTED(-403),
+/* 202 */     ERR_CACHE_OPEN_FAILURE(-404),
+/* 203 */     ERR_CACHE_CREATE_FAILURE(-405),
+/* 204 */     ERR_CACHE_RACE(-406),
+/* 205 */     ERR_CACHE_CHECKSUM_READ_FAILURE(-407),
+/* 206 */     ERR_CACHE_CHECKSUM_MISMATCH(-408),
+/* 207 */     ERR_CACHE_LOCK_TIMEOUT(-409),
+/* 208 */     ERR_CACHE_AUTH_FAILURE_AFTER_READ(-410),
+/* 209 */     ERR_CACHE_ENTRY_NOT_SUITABLE(-411),
+/* 210 */     ERR_CACHE_DOOM_FAILURE(-412),
+/* 211 */     ERR_CACHE_OPEN_OR_CREATE_FAILURE(-413),
+/* 212 */     ERR_INSECURE_RESPONSE(-501),
+/* 213 */     ERR_NO_PRIVATE_KEY_FOR_CERT(-502),
+/* 214 */     ERR_ADD_USER_CERT_FAILED(-503),
+/* 215 */     ERR_INVALID_SIGNED_EXCHANGE(-504),
+/* 216 */     ERR_INVALID_WEB_BUNDLE(-505),
+/* 217 */     ERR_FTP_FAILED(-601),
+/* 218 */     ERR_FTP_SERVICE_UNAVAILABLE(-602),
+/* 219 */     ERR_FTP_TRANSFER_ABORTED(-603),
+/* 220 */     ERR_FTP_FILE_BUSY(-604),
+/* 221 */     ERR_FTP_SYNTAX_ERROR(-605),
+/* 222 */     ERR_FTP_COMMAND_NOT_SUPPORTED(-606),
+/* 223 */     ERR_FTP_BAD_COMMAND_SEQUENCE(-607),
+/* 224 */     ERR_PKCS12_IMPORT_BAD_PASSWORD(-701),
+/* 225 */     ERR_PKCS12_IMPORT_FAILED(-702),
+/* 226 */     ERR_IMPORT_CA_CERT_NOT_CA(-703),
+/* 227 */     ERR_IMPORT_CERT_ALREADY_EXISTS(-704),
+/* 228 */     ERR_IMPORT_CA_CERT_FAILED(-705),
+/* 229 */     ERR_IMPORT_SERVER_CERT_FAILED(-706),
+/* 230 */     ERR_PKCS12_IMPORT_INVALID_MAC(-707),
+/* 231 */     ERR_PKCS12_IMPORT_INVALID_FILE(-708),
+/* 232 */     ERR_PKCS12_IMPORT_UNSUPPORTED(-709),
+/* 233 */     ERR_KEY_GENERATION_FAILED(-710),
+/* 234 */     ERR_PRIVATE_KEY_EXPORT_FAILED(-712),
+/* 235 */     ERR_SELF_SIGNED_CERT_GENERATION_FAILED(-713),
+/* 236 */     ERR_CERT_DATABASE_CHANGED(-714),
+/* 237 */     ERR_DNS_MALFORMED_RESPONSE(-800),
+/* 238 */     ERR_DNS_SERVER_REQUIRES_TCP(-801),
+/* 239 */     ERR_DNS_SERVER_FAILED(-802),
+/* 240 */     ERR_DNS_TIMED_OUT(-803),
+/* 241 */     ERR_DNS_CACHE_MISS(-804),
+/* 242 */     ERR_DNS_SEARCH_EMPTY(-805),
+/* 243 */     ERR_DNS_SORT_ERROR(-806),
+/* 244 */     ERR_DNS_SECURE_RESOLVER_HOSTNAME_RESOLUTION_FAILED(-808);
+/*     */     
+/* 246 */     private static final Map<Integer, ErrorCode> CODES = new HashMap<>();
+/*     */     static {
+/* 248 */       for (ErrorCode errorCode : values()) {
+/*     */ 
+/*     */         
+/* 251 */         if (!CODES.containsKey(Integer.valueOf(errorCode.code))) {
+/* 252 */           CODES.put(Integer.valueOf(errorCode.code), errorCode);
+/*     */         }
+/*     */       } 
+/*     */     }
+/*     */     
+/*     */     private final int code;
+/*     */     
+/*     */     ErrorCode(int param1Int1) {
+/* 260 */       this.code = param1Int1;
+/*     */     }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */     
+/*     */     public int getCode() {
+/* 269 */       return this.code;
+/*     */     }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */     
+/*     */     public static ErrorCode findByCode(int param1Int) {
+/* 279 */       return CODES.get(Integer.valueOf(param1Int));
+/*     */     }
+/*     */   }
+/*     */ }
+
+
+/* Location:              C:\Users\jesse\Desktop\jcef.jar!\org\cef\handler\CefLoadHandler.class
+ * Java compiler version: 8 (52.0)
+ * JD-Core Version:       1.1.3
+ */

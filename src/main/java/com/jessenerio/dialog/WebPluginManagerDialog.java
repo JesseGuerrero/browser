@@ -64,7 +64,7 @@ public class WebPluginManagerDialog extends JDialog {
 
     private class PluginTableModel extends AbstractTableModel implements CefWebPluginInfoVisitor {
         private final String[] columnNames;
-        private Vector<Object[]> rowData = new Vector<>();
+        private final Vector<Object[]> rowData = new Vector<>();
 
         public PluginTableModel() {
             super();
@@ -75,7 +75,7 @@ public class WebPluginManagerDialog extends JDialog {
         @Override
         public boolean visit(CefWebPluginInfo info, int count, int total) {
             Object[] entry = {info.getName(), info.getPath(), info.getVersion(),
-                    info.getDescription(), new Boolean(false)};
+                    info.getDescription(), Boolean.FALSE};
             int row = rowData.size();
             rowData.addElement(entry);
             fireTableRowsInserted(row, row);

@@ -41,7 +41,7 @@ public class SearchSchemeHandler extends CefResourceHandlerAdapter {
             newRequest.setMethod("GET");
             newRequest.setURL(newUrl);
             newRequest.setFirstPartyForCookies(newUrl);
-            browser_.loadRequest(newRequest);
+            browser_.loadHTTPRequest(newRequest);
         }
         return false;
     }

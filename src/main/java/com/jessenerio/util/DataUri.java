@@ -12,4 +12,4 @@ public class DataUri {
         return "data:" + mimeType + ";base64,"
                 + java.util.Base64.getEncoder().encodeToString(contents.getBytes());
     }
-};
+}

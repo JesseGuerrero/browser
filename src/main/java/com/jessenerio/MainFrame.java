@@ -72,8 +72,8 @@ public class MainFrame extends BrowserFrame {
 	private TabsPanel tabs_pane_;
     private StatusPanel status_panel_;
     private boolean browserFocus_ = true;
-    private boolean osr_enabled_;
-    private boolean transparent_painting_enabled_;
+    private final boolean osr_enabled_;
+    private final boolean transparent_painting_enabled_;
 
     public MainFrame(boolean osrEnabled, boolean transparentPaintingEnabled,
             boolean createImmediately, String[] args) {
